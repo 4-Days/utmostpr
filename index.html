@@ -3,41 +3,253 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Utmost PR</title>
+  <title>Joel Rivera</title>
 
   <style>
+    :root {
+      --bg-color: #6b7a45;
+      --text-color: #f5f1e8;
+    }
+
     body {
       margin: 0;
       height: 100vh;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: Arial, Helvetica, sans-serif;
+      transition: background-color 0.4s ease;
+    }
 
+    .page {
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
 
-      background-color: #6b7a52;
-
-      font-family: Arial, sans-serif;
+    .container {
+      text-align: center;
+      padding: 20px;
+      max-width: 700px;
     }
 
     h1 {
-      color: white;
       font-size: 4rem;
-      font-weight: 300;
-      letter-spacing: 2px;
-      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .welcome {
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+    }
+
+    .copyright {
+      font-size: 0.95rem;
+      opacity: 0.8;
+      margin-bottom: 40px;
+    }
+
+    .toggle-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    /* Toggle Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: rgba(255,255,255,0.25);
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: rgba(255,255,255,0.4);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: white;
+      color: #333;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    select {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      margin-top: 20px;
+    }
+
+    #page2 {
+      display: none;
+    }
+
+    #response {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      line-height: 1.6;
     }
   </style>
 </head>
 
 <body>
-  <h1>Utmost PR</h1>
-  <p>
-    Hi, I'm Joel.
-  </p>
-  <p>
-    This is my first site! ;)
-  </p>
+
+  <!-- PAGE 1 -->
+  <div class="page" id="page1">
+    <div class="container">
+
+      <h1>Joel Rivera</h1>
+
+      <div class="welcome">
+        Welcome to my home site!
+      </div>
+
+      <div class="copyright">
+        Copyright © Joel Rivera
+      </div>
+
+      <div class="toggle-wrapper">
+        <span>Team Olive</span>
+
+        <label class="switch">
+          <input type="checkbox" id="themeToggle">
+          <span class="slider"></span>
+        </label>
+
+        <span>Team Blue Sky</span>
+      </div>
+
+      <button onclick="enterSite()">Enter</button>
+
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page" id="page2">
+    <div class="container">
+
+      <h1 id="colorTitle"></h1>
+
+      <div class="welcome">
+        What would you like to do?
+      </div>
+
+      <select id="choice">
+        <option value="">-- Choose an option --</option>
+        <option value="game">Play a game</option>
+        <option value="joke">Tell me a joke</option>
+        <option value="nothing">Nothing</option>
+      </select>
+
+      <br><br>
+
+      <button onclick="submitChoice()">Submit</button>
+
+      <div id="response"></div>
+
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("themeToggle");
+
+    let currentColor = "Olive Green";
+
+    toggle.addEventListener("change", () => {
+
+      if (toggle.checked) {
+        document.documentElement.style.setProperty(
+          "--bg-color",
+          "#6ea8c9"
+        );
+
+        currentColor = "Blue Sky";
+
+      } else {
+
+        document.documentElement.style.setProperty(
+          "--bg-color",
+          "#6b7a45"
+        );
+
+        currentColor = "Olive Green";
+      }
+    });
+
+    function enterSite() {
+
+      document.getElementById("page1").style.display = "none";
+      document.getElementById("page2").style.display = "flex";
+
+      document.getElementById("colorTitle").innerText =
+        "Welcome to " + currentColor;
+    }
+
+    function submitChoice() {
+
+      const choice = document.getElementById("choice").value;
+      const response = document.getElementById("response");
+
+      if (choice === "nothing") {
+
+        response.innerHTML =
+          "Okay, maybe next time.<br>Have a great day!";
+
+      } else if (choice === "game" || choice === "joke") {
+
+        response.innerHTML =
+          "Awesome! I'm still working on that feature.<br>Please come back later. Have a great day!";
+
+      } else {
+
+        response.innerHTML =
+          "Please choose an option first.";
+      }
+    }
+  </script>
 
 </body>
 </html>
